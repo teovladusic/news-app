@@ -8,7 +8,9 @@ import androidx.compose.ui.Modifier
 import com.puzzle_agency.newsapp.features.NavGraphs
 import com.puzzle_agency.newsapp.ui.theme.NewsAppTheme
 import com.ramcosta.composedestinations.DestinationsNavHost
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
