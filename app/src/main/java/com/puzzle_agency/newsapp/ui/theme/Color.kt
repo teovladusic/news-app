@@ -17,7 +17,9 @@ val Brand800 = Color(0xFF166095)
 val Black700 = Color(0xFF1F1F1F)
 
 val Neutral500 = Color(0xFF64748B)
+val Neutral400 = Color(0xFF94A3B8)
 
 val Teal400 = Color(0xFF2DD4BF)
 
-val TealTransparent = Color(0x332DD4BF)
+val Rose400 = Color(0xFFFB7185)
+
