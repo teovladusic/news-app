@@ -53,6 +53,7 @@ import coil.compose.AsyncImage
 import com.puzzle_agency.newsapp.R
 import com.puzzle_agency.newsapp.features.destinations.ArticleDetailsScreenDestination
 import com.puzzle_agency.newsapp.features.news_shared.data.model.Article
+import com.puzzle_agency.newsapp.ui.composables.dialog.SimpleErrorDialog
 import com.puzzle_agency.newsapp.ui.composables.navigation_bars.BottomNavigationBar
 import com.puzzle_agency.newsapp.ui.theme.BasicBlack
 import com.puzzle_agency.newsapp.ui.theme.Brand600
@@ -77,7 +78,7 @@ import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 fun TopNewsScreen(
     navController: NavController,
     navigator: DestinationsNavigator,
-    viewModel: TopNewsViewModel = hiltViewModel()
+    viewModel: TopNewsViewModel
 ) {
 
     val navigateToArticleDetails: (Article) -> Unit = {
@@ -114,6 +115,15 @@ fun TopNewsScreen(
             BottomNavigationBar(navController = navController, navigator = navigator)
         }
     ) { paddingValues ->
+
+        if (viewState.errorDialogMessage != null) {
+            SimpleErrorDialog(
+                title = stringResource(id = R.string.error),
+                text = viewState.errorDialogMessage ?: ""
+            ) {
+                viewModel.dismissDialog()
+            }
+        }
 
         LazyColumn(
             modifier = Modifier

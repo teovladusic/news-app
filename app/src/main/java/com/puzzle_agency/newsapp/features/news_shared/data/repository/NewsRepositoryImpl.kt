@@ -16,4 +16,8 @@ class NewsRepositoryImpl @Inject constructor(
     override fun getTopNews(filters: Map<String, String>): Flow<Resource<ArticleResponse>> = safeApiCall {
         newsApi.getTopHeadlines(filters)
     }
+
+    override fun getAllNews(filters: Map<String, String>): Flow<Resource<ArticleResponse>> = safeApiCall {
+        newsApi.getAllNews(filters)
+    }
 }

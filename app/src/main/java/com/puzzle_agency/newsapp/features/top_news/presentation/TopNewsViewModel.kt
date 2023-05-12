@@ -104,4 +104,8 @@ class TopNewsViewModel @Inject constructor(
     private fun setErrorDialog(error: String) {
         _viewState.update { it.copy(errorDialogMessage = error, loading = false) }
     }
+
+    fun dismissDialog() {
+        _viewState.update { it.copy(errorDialogMessage = null) }
+    }
 }
