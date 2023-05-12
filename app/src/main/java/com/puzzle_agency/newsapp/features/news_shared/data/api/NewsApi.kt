@@ -11,4 +11,9 @@ interface NewsApi {
     suspend fun getTopHeadlines(
         @QueryMap filters: Map<String, String>
     ): Response<ArticleResponse>
+
+    @GET("everything")
+    suspend fun getAllNews(
+        @QueryMap filters: Map<String, String>
+    ): Response<ArticleResponse>
 }

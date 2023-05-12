@@ -8,4 +8,6 @@ import retrofit2.Response
 interface NewsRepository {
 
     fun getTopNews(filters: Map<String, String>): Flow<Resource<ArticleResponse>>
+
+    fun getAllNews(filters: Map<String, String>): Flow<Resource<ArticleResponse>>
 }
