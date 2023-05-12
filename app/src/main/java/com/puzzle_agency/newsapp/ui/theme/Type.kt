@@ -48,3 +48,11 @@ val Typography.body1Style: TextStyle
         fontSize = 11.sp,
         lineHeight = 17.sp,
     )
+
+val Typography.bodyStyle: TextStyle
+    get() = TextStyle(
+        fontFamily = RobotoFontFamily,
+        fontWeight = FontWeight.Normal,
+        fontSize = 12.sp,
+        lineHeight = 14.sp,
+    )

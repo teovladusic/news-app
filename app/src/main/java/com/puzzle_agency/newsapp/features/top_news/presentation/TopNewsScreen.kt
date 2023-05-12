@@ -2,6 +2,7 @@ package com.puzzle_agency.newsapp.features.top_news.presentation
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -50,6 +51,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.puzzle_agency.newsapp.R
+import com.puzzle_agency.newsapp.features.destinations.ArticleDetailsScreenDestination
 import com.puzzle_agency.newsapp.features.news_shared.data.model.Article
 import com.puzzle_agency.newsapp.ui.composables.navigation_bars.BottomNavigationBar
 import com.puzzle_agency.newsapp.ui.theme.BasicBlack
@@ -77,6 +79,10 @@ fun TopNewsScreen(
     navigator: DestinationsNavigator,
     viewModel: TopNewsViewModel = hiltViewModel()
 ) {
+
+    val navigateToArticleDetails: (Article) -> Unit = {
+        navigator.navigate(ArticleDetailsScreenDestination(it))
+    }
 
     val viewState by viewModel.viewState.collectAsStateWithLifecycle()
 
@@ -129,7 +135,7 @@ fun TopNewsScreen(
             }
 
             item {
-                NewsPager(viewState.topArticles)
+                NewsPager(viewState.topArticles) { navigateToArticleDetails(it) }
             }
 
             item {
@@ -149,7 +155,7 @@ fun TopNewsScreen(
             ) {
                 val article = viewState.articles[it]
 
-                ArticleListItem(article = article)
+                ArticleListItem(article = article) { navigateToArticleDetails(article) }
 
                 val isLastItem = it == viewState.articles.size - 1
 
@@ -197,7 +203,10 @@ fun TopNewsScreen(
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun NewsPager(articles: List<Article>) {
+fun NewsPager(
+    articles: List<Article>,
+    onArticleClick: (Article) -> Unit
+) {
     val pagerState = rememberPagerState()
 
     Column(
@@ -212,7 +221,7 @@ fun NewsPager(articles: List<Article>) {
             state = pagerState
         ) { index ->
             val article = articles[index]
-            NewsPagerItem(article)
+            NewsPagerItem(article) { onArticleClick(article) }
         }
 
         Row(
@@ -235,7 +244,10 @@ fun NewsPager(articles: List<Article>) {
 }
 
 @Composable
-fun NewsPagerItem(article: Article) {
+fun NewsPagerItem(
+    article: Article,
+    onArticleClick: () -> Unit
+) {
     val shape = RoundedCornerShape(20.dp)
 
     Box(
@@ -245,7 +257,8 @@ fun NewsPagerItem(article: Article) {
             .height(164.dp)
             .clip(shape)
             .shadow(2.dp, shape = shape)
-            .background(Color.White, shape = shape),
+            .background(Color.White, shape = shape)
+            .clickable { onArticleClick() },
     ) {
         AsyncImage(
             model = article.urlToImage,
@@ -283,10 +296,14 @@ fun NewsPagerItem(article: Article) {
 
 
 @Composable
-fun ArticleListItem(article: Article) {
+fun ArticleListItem(
+    article: Article,
+    onArticleClick: () -> Unit
+) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
+            .clickable { onArticleClick() }
             .padding(horizontal = Dimens.spacing_double),
         verticalAlignment = Alignment.CenterVertically
     ) {
